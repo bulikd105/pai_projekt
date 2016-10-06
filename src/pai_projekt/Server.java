@@ -12,14 +12,13 @@ public class Server implements Runnable
 
 	public Server(Socket accept, String string, ArrayList<Player> playerList) 
 	{
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public void run()
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
-
 }
