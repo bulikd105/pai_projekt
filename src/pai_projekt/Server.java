@@ -1,9 +1,11 @@
 package pai_projekt;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import lab4.MyService;
 
 /*
  * Klasa Server
@@ -14,10 +16,11 @@ public class Server implements Runnable
 	private String playerName = "Player ";
 	private Socket socket;
 	private ArrayList<Player> playerList;
+	Player newPlayer = null;
 	
 	public Server(Socket socket, int playerId, ArrayList<Player> playerList) 
 	{
-		Player newPlayer = new Player(playerId, playerName + playerId);
+		newPlayer = new Player(playerId, playerName + playerId);
 		this.socket = socket;
 		this.playerList = playerList;
 		this.playerList.add(newPlayer);
@@ -28,8 +31,33 @@ public class Server implements Runnable
 	@Override
 	public void run()
 	{
+		BufferedReader in = null;
+        PrintWriter out = null;
+        
+        try
+		{	
+            in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
 		
-		
+		}
+        catch(IOException e)
+		{
+			System.out.println("Klient: " + newPlayer.getPlayerName() + " zglosil blad: " + e);
+		}
+		finally // W razie gdyby klient zglosil blad, rozlacz go
+		{
+        	// Zamkniecie bufferow
+        	try 
+        	{
+				in.close();
+				out.close();
+				socket.close();
+			} 
+        	catch (IOException e) 
+        	{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public boolean ChangeName(ArrayList<Player> playerList, Player player, String playerName)
