@@ -32,16 +32,28 @@ public class Server implements Runnable
 		
 	}
 	
-	public void ChangeName()
+	public void ChangeName(Player player)
 	{
 		
 	}
 	
-	public String ShowPlayerList(ArrayList<Player> playerList)
+	public String ShowMyStat(Player player)
 	{
 		StringBuilder sb = new StringBuilder();
-
-		sb.append("Players list\n");
+		
+		sb.append("My stats\n");
+		sb.append("Player ID: " + player.getPlayerId() + "\n");
+		sb.append("Player Name: " + player.getPlayerName() + "\n");
+		sb.append("Score: " + player.getPlayerScore() + "\n");
+		
+		return sb.toString();
+		
+	}
+	
+	public String ShowAllStats(ArrayList<Player> playerList)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("All players stats\n");
 		
 		// Sprawdzamy czy lista wszystkich uslug nie jest pusta
 		if(!playerList.isEmpty())
