@@ -15,6 +15,7 @@ public class Player
 	{
 		this.playerId = playerId;
 		this.playerName = playerName;
+		this.playerScore = 0;
 	}
 
 	public int getPlayerId() 
