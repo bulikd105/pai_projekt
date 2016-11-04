@@ -20,14 +20,13 @@ public class Game
 		
 		ServerSocket serverSocket = new ServerSocket(serverPort);
 		
-		String playerName = "Player "; 
-		int i = 1;
+		int playerId = 1;
 		
 		try
 		{
 			while(true)
 			{
-				Thread playerThread = new Thread(new Server(serverSocket.accept(), playerName + i++, playerList));
+				Thread playerThread = new Thread(new Server(serverSocket.accept(), playerId++, playerList));
 				playerThread.start();
 			}
 		}
