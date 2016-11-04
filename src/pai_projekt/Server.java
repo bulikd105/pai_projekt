@@ -33,12 +33,43 @@ public class Server implements Runnable
 	{
 		BufferedReader in = null;
         PrintWriter out = null;
-        
+                
         try
 		{	
             in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-		
+            
+            boolean mainFlag = true;
+
+            String userInput = "";
+            String serverOutput = "";
+            
+        	
+            
+            while(mainFlag  == true)
+            {
+
+            	// Wyswietl glowne menu
+            	out.println( "1 - Podaj haslo\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+        					 "3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
+        					 "5 - Wyjdz");
+
+            	userInput = in.readLine();
+            	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+
+            	if(userInput != null && userInput.length() > 0)
+            	{
+            		switch(userInput)
+	            	{
+            		
+	            	}           		
+            	}
+            	else
+            	{
+            		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+            		break;
+            	}
+            }
 		}
         catch(IOException e)
 		{
