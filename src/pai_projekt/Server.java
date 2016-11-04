@@ -32,15 +32,39 @@ public class Server implements Runnable
 		
 	}
 	
-	public void ChangeName(Player player)
+	public boolean ChangeName(ArrayList<Player> playerList, Player player, String playerName)
 	{
-		
+		// Sprawdzamy czy lista nie jest pusta
+		if(!playerList.isEmpty())
+		{
+			// Przeszukujemy liste w poszukiwaniu nowej nazwy uzytkownika
+			for(Player tempPlayer : playerList)
+			{
+				// Jesli juz taka istnieje zwracamy false
+				if(tempPlayer.getPlayerName().equals(playerName))
+				{
+					return false;
+				}
+			}
+			
+			// Jesli nie istnieje to ustawiamy nowa nazwe uzytkownika
+			player.setPlayerName(playerName);
+			playerList.set(playerList.indexOf(player), player);
+	
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public String ShowMyStat(Player player)
 	{
+		// String builder, zeby wyslac tylko jedna linie odpwowiedzi
 		StringBuilder sb = new StringBuilder();
 		
+		// Dane aktualnego gracza
 		sb.append("My stats\n");
 		sb.append("Player ID: " + player.getPlayerId() + "\n");
 		sb.append("Player Name: " + player.getPlayerName() + "\n");
@@ -52,13 +76,14 @@ public class Server implements Runnable
 	
 	public String ShowAllStats(ArrayList<Player> playerList)
 	{
+		// String builder, zeby wyslac tylko jedna linie odpwowiedzi
 		StringBuilder sb = new StringBuilder();
 		sb.append("All players stats\n");
 		
-		// Sprawdzamy czy lista wszystkich uslug nie jest pusta
+		// Sprawdzamy czy lista graczy nie jest pusta
 		if(!playerList.isEmpty())
 		{
-			// Wyswietlamy liste wszystkich uslg
+			// Zapisuje liste graczy
 			for(Player player : playerList)
 			{
 				sb.append("----------------------------------------\n");
