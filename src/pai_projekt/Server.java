@@ -48,26 +48,85 @@ public class Server implements Runnable
             
             while(mainFlag  == true)
             {
-
-            	// Wyswietl glowne menu
-            	out.println( "1 - Podaj haslo\n2 - Wyswietl statystyki wszystkich graczy\n" + 
-        					 "3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
-        					 "5 - Wyjdz");
-
-            	userInput = in.readLine();
-            	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
-
-            	if(userInput != null && userInput.length() > 0)
+            	// Gdy do³¹cza nowy gracz
+            	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false)
             	{
-            		switch(userInput)
-	            	{
-            		
-	            	}           		
+            		out.println("Witaj nowy graczu. Wybierz jedna z opcji:" + 
+            					"\n1 - Dolacz do gry\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+		       					"3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
+		       					"5 - Wyjdz");
+		
+		           	userInput = in.readLine();
+		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+		
+		           	if(userInput != null && userInput.length() > 0)
+		           	{
+		           		switch(userInput)
+			            	{
+		           		
+			            	}           		
+		           	}
+		           	else
+		           	{
+		           		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+		           		break;
+		           	}
             	}
+            	// Gdy gracz zgadujê haslo
+            	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == true)
+            	{
+            		// Wyswietl glowne menu
+                	out.println( "Twoim zadaniem jest odgadniêcie hasla.\n" + 
+                				 "1 - Podaj haslo\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+            					 "3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
+            					 "5 - Wyjdz");
+
+                	userInput = in.readLine();
+                	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+
+                	if(userInput != null && userInput.length() > 0)
+                	{
+                		switch(userInput)
+    	            	{
+                		
+    	            	}           		
+                	}
+                	else
+                	{
+                		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+                		break;
+                	}
+            	}
+            	// Gdy gracz wymyœla has³o
+            	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == false)
+            	{
+            		// Wyswietl glowne menu
+                	out.println( "Twoim zadaniem jest wymyœlenie has³a.\n" + 
+                				 "1 - Podaj nowe haslo\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+	       					 	 "3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
+            					 "5 - Wyjdz");
+
+                	userInput = in.readLine();
+                	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+
+                	if(userInput != null && userInput.length() > 0)
+                	{
+                		switch(userInput)
+    	            	{
+                		
+    	            	}           		
+                	}
+                	else
+                	{
+                		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+                		break;
+                	}
+            	}
+            	// W innym wypadku, ustaw gracza, jako graj¹cego 
             	else
             	{
-            		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-            		break;
+            		newPlayer.setGuessing(true);
+            		newPlayer.setNewPlayer(false);
             	}
             }
 		}
