@@ -63,7 +63,7 @@ public class Client
 						return;
 					}
 					
-					/*// Wyjscie z petli po otrzymaniu odpowiedzi
+					// Wyjscie z petli po otrzymaniu odpowiedzi
 					if(serverAnswer.equals("Gotowe") || serverAnswer.equals("Blad, popraw dane"))
 					{
 						flag = false;
@@ -88,7 +88,7 @@ public class Client
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
-					}*/
+					}
 				}	
 				flag = true;
 			}
