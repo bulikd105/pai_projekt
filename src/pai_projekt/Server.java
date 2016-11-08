@@ -44,8 +44,6 @@ public class Server implements Runnable
             String userInput = "";
             String serverOutput = "";
             
-        	
-            
             while(mainFlag  == true)
             {
             	// Gdy do³¹cza nowy gracz
@@ -62,9 +60,25 @@ public class Server implements Runnable
 		           	if(userInput != null && userInput.length() > 0)
 		           	{
 		           		switch(userInput)
-			            	{
-		           		
-			            	}           		
+		            	{
+		            		case "1" :  out.println("Case 1");
+		            					break;
+		            		
+		            		case "2" :  out.println("Case 2");
+            							break;
+       		
+		            		case "3" :  out.println("Case 3");
+            							break;
+       		
+		            		case "4" :  out.println("Case 4");
+            							break;
+       		
+		            		case "5" :  out.println("Case 5");
+            							break;
+       		
+            				default  :  out.println("Nie ma takiej opcji\n");
+            							break;
+		            	}           		
 		           	}
 		           	else
 		           	{
@@ -88,7 +102,23 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-                		
+	    	            	case "1" :  out.println("Case 1");
+	    								break;
+	    		
+				    		case "2" :  out.println("Case 2");
+										break;
+				
+				    		case "3" :  out.println("Case 3");
+										break;
+				
+				    		case "4" :  out.println("Case 4");
+										break;
+				
+				    		case "5" :  out.println("Case 5");
+										break;
+				
+							default  :  out.println("Nie ma takiej opcji\n");
+										break;
     	            	}           		
                 	}
                 	else
@@ -113,7 +143,23 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-                		
+	    	            	case "1" :  out.println("Case 1");
+	    					break;
+    		
+				    		case "2" :  out.println("Case 2");
+										break;
+				
+				    		case "3" :  out.println("Case 3");
+										break;
+				
+				    		case "4" :  out.println("Case 4");
+										break;
+				
+				    		case "5" :  out.println("Case 5");
+										break;
+				
+							default  :  out.println("Nie ma takiej opcji\n");
+										break;
     	            	}           		
                 	}
                 	else
