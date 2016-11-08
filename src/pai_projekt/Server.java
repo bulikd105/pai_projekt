@@ -40,6 +40,7 @@ public class Server implements Runnable
             out = new PrintWriter(socket.getOutputStream(), true);
             
             boolean mainFlag = true;
+            boolean menuFlag = false;
 
             String userInput = "";
             String serverOutput = "";
@@ -47,12 +48,10 @@ public class Server implements Runnable
             while(mainFlag  == true)
             {
             	// Gdy do³¹cza nowy gracz
-            	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false)
+            	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false && menuFlag == false)
             	{
             		out.println("Witaj nowy graczu. Wybierz jedna z opcji:" + 
-            					"\n1 - Dolacz do gry\n2 - Wyswietl statystyki wszystkich graczy\n" + 
-		       					"3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
-		       					"5 - Wyjdz");
+            					"\n1 - Dolacz do gry\n2 - Menu");
 		
 		           	userInput = in.readLine();
 		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
@@ -61,21 +60,13 @@ public class Server implements Runnable
 		           	{
 		           		switch(userInput)
 		            	{
-		            		case "1" :  out.println("Case 1");
+		            		case "1" :  out.println("Dolaczasz do gry");
 		            					break;
 		            		
-		            		case "2" :  out.println("Case 2");
+		            		case "2" :  out.println("Menu");
+		            					menuFlag = true;
             							break;
-       		
-		            		case "3" :  out.println("Case 3");
-            							break;
-       		
-		            		case "4" :  out.println("Case 4");
-            							break;
-       		
-		            		case "5" :  out.println("Case 5");
-            							break;
-       		
+
             				default  :  out.println("Nie ma takiej opcji\n");
             							break;
 		            	}           		
@@ -87,13 +78,11 @@ public class Server implements Runnable
 		           	}
             	}
             	// Gdy gracz zgadujê haslo
-            	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == true)
+            	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == true && menuFlag == false)
             	{
             		// Wyswietl glowne menu
                 	out.println( "Twoim zadaniem jest odgadniêcie hasla.\n" + 
-                				 "1 - Podaj haslo\n2 - Wyswietl statystyki wszystkich graczy\n" + 
-            					 "3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
-            					 "5 - Wyjdz");
+                				 "1 - Podaj haslo\n2 - Menu");
 
                 	userInput = in.readLine();
                 	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
@@ -102,19 +91,11 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-	    	            	case "1" :  out.println("Case 1");
+	    	            	case "1" :  out.println("Wprowadz haslo");
 	    								break;
 	    		
-				    		case "2" :  out.println("Case 2");
-										break;
-				
-				    		case "3" :  out.println("Case 3");
-										break;
-				
-				    		case "4" :  out.println("Case 4");
-										break;
-				
-				    		case "5" :  out.println("Case 5");
+				    		case "2" :  out.println("Menu");
+				    					menuFlag = true;
 										break;
 				
 							default  :  out.println("Nie ma takiej opcji\n");
@@ -128,13 +109,11 @@ public class Server implements Runnable
                 	}
             	}
             	// Gdy gracz wymyœla has³o
-            	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == false)
+            	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == false && menuFlag == false)
             	{
             		// Wyswietl glowne menu
                 	out.println( "Twoim zadaniem jest wymyœlenie has³a.\n" + 
-                				 "1 - Podaj nowe haslo\n2 - Wyswietl statystyki wszystkich graczy\n" + 
-	       					 	 "3 - Wyswietl swoje dane\n4 - Zmien swoja nazwe uzytkownika\n" + 
-            					 "5 - Wyjdz");
+                				 "1 - Wymyœl nowe haslo\n2 - Menu");
 
                 	userInput = in.readLine();
                 	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
@@ -143,19 +122,11 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-	    	            	case "1" :  out.println("Case 1");
-	    					break;
+	    	            	case "1" :  out.println("Wymysl haslo");
+	    								break;
     		
-				    		case "2" :  out.println("Case 2");
-										break;
-				
-				    		case "3" :  out.println("Case 3");
-										break;
-				
-				    		case "4" :  out.println("Case 4");
-										break;
-				
-				    		case "5" :  out.println("Case 5");
+				    		case "2" :  out.println("Menu");
+				    					menuFlag = true;
 										break;
 				
 							default  :  out.println("Nie ma takiej opcji\n");
@@ -173,6 +144,47 @@ public class Server implements Runnable
             	{
             		newPlayer.setGuessing(true);
             		newPlayer.setNewPlayer(false);
+            	}
+            	
+            	// Pokaz menu
+            	if(menuFlag == true)
+            	{
+            		out.println("Witaj w menu.\n" + 
+            					"1 - Wyswietl swoje dane\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+            					"3 - Zmien swoja nazwe uzytkownika\n4 - Wroc do gry\n5 - Wyjdz");
+	
+		           	userInput = in.readLine();
+		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+		
+		           	if(userInput != null && userInput.length() > 0)
+		           	{
+		           		switch(userInput)
+		            	{
+		            		case "1" :  out.println("Twoje Dane");
+		            					break;
+		            		
+		            		case "2" :  out.println("Dane wszystkich graczy");
+	        							break;
+	   		
+		            		case "3" :  out.println("Podaj nowa nazwe uzytkownika");
+	        							break;
+	   		
+		            		case "4" :  out.println("Wracamy do gry");
+		            					menuFlag = false;
+										break;
+		            		
+		            		case "5" :  out.println("Wyjdz");
+	        							break;
+	   		
+	        				default  :  out.println("Nie ma takiej opcji\n");
+	        							break;
+		            	}           		
+		           	}
+		           	else
+		           	{
+		           		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+		           		break;
+		           	}
             	}
             }
 		}
