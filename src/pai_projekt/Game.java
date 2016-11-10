@@ -13,6 +13,7 @@ public class Game
 {
 	// Lista do przechowywania graczy
 	public static ArrayList<Player> playerList = new ArrayList<Player>();
+	public static ArrayList<String> passwordList = new ArrayList<String>();
 	
 	public static void main(String[] args) throws IOException 
 	{
@@ -26,7 +27,7 @@ public class Game
 		{
 			while(true)
 			{
-				Thread playerThread = new Thread(new Server(serverSocket.accept(), playerId++, playerList));
+				Thread playerThread = new Thread(new Server(serverSocket.accept(), playerId++, playerList, passwordList));
 				playerThread.start();
 			}
 		}
