@@ -252,7 +252,22 @@ public class Server implements Runnable
 		            					out.println(ShowAllStats(playerList));
 	        							break;
 	   		
-		            		case "3" :  out.println("Podaj nowa nazwe uzytkownika");
+		            		case "3" :  out.println("Nowa nazwa:");
+		            					if((userInput = in.readLine()) != null && userInput.length() > 0)
+		            					{
+		            						if(ChangeName(playerList, newPlayer, userInput))
+		            						{
+		            							out.println("Udalo sie zmienic nazwe");
+		            						}
+		            						else
+		            						{
+		            							out.println("Podana nazwa uzytkownika juz istenieje");
+		            						}
+		            					}
+		            					else
+		            					{
+		            						out.println("Nie mozna wysylac null.");
+		            					}
 	        							break;
 	   		
 		            		case "4" :  out.println("Wracamy do gry");

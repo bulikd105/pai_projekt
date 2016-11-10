@@ -70,20 +70,9 @@ public class Client
 					}
 					
 					// Uzytkownik podaje kolejny napis
-					if(serverAnswer.equals("Wybierasz:") || serverAnswer.equals("Podaj haslo:"))
+					if(serverAnswer.equals("Wybierasz:") || serverAnswer.equals("Podaj haslo:") || serverAnswer.equals("Nowa nazwa:"))
 					{
 						userInput = stdIn.readLine();
-						/*while(true)
-						{
-							if((userInput = stdIn.readLine()) != null && userInput.length() > 0)
-							{
-								break;
-							}
-							else
-							{
-								System.out.println("Nie mozna wysylac null. Podaj cos:");
-							}
-						}*/
 						out.println(userInput);
 					}
 				}	
