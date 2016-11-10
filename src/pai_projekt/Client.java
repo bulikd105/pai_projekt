@@ -64,13 +64,13 @@ public class Client
 					}
 					
 					// Wyjscie z petli po otrzymaniu odpowiedzi
-					if(serverAnswer.equals("Gotowe") || serverAnswer.equals("Blad, popraw dane"))
+					if(serverAnswer.equals("Gotowe") || serverAnswer.equals("Popraw dane"))
 					{
 						flag = false;
 					}
 					
 					// Uzytkownik podaje kolejny napis
-					if(serverAnswer.equals("Wybierasz:"))
+					if(serverAnswer.equals("Wybierasz:") || serverAnswer.equals("Podaj haslo:"))
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
