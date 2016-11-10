@@ -73,6 +73,17 @@ public class Client
 					if(serverAnswer.equals("Wybierasz:") || serverAnswer.equals("Podaj haslo:"))
 					{
 						userInput = stdIn.readLine();
+						/*while(true)
+						{
+							if((userInput = stdIn.readLine()) != null && userInput.length() > 0)
+							{
+								break;
+							}
+							else
+							{
+								System.out.println("Nie mozna wysylac null. Podaj cos:");
+							}
+						}*/
 						out.println(userInput);
 					}
 				}	

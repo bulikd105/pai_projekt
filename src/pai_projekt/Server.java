@@ -50,10 +50,11 @@ public class Server implements Runnable
             String userInput = "";
             String serverOutput = "";
             
-            String password = passwordList.get(passwordList.size()-1);
+            //String password = passwordList.get(passwordList.size()-1);
             
             while(mainFlag  == true)
             {
+            	String password = passwordList.get(passwordList.size()-1);
             	// Gdy do³¹cza nowy gracz
             	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false && menuFlag == false)
             	{
@@ -91,8 +92,9 @@ public class Server implements Runnable
 		           	}
 		           	else
 		           	{
-		           		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-		           		break;
+		           		out.println("Nie mozna wysylac null.");
+		           		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+		           		//break;
 		           	}
             	}
             	// Gdy gracz zgadujê haslo
@@ -159,8 +161,9 @@ public class Server implements Runnable
                 	}
                 	else
                 	{
-                		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-                		break;
+                		out.println("Nie mozna wysylac null.");
+                		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+                		//break;
                 	}
             	}
             	// Gdy gracz wymyœla has³o
@@ -184,15 +187,16 @@ public class Server implements Runnable
 		    	            				userInput = in.readLine();
 	
 				            				// Jesli wyraz istnieje
-				            				if(dictionary.Contains(userInput))
+				            				if(dictionary.Contains(userInput) && userInput.length() > 0)
 				            				{
 				            					password = userInput;
 				            					passwordList.add(password);
+				            					out.println("Haslo do odgadniecia to: " + password);
 				            				}
 				            				// Jesli wyraz nie istnieje
 				            				else 
 				            				{
-				            					out.println("Nie ma takiego wyrazu\nPopraw dane");
+				            					out.println("Nie ma takiego wyrazu");
 				            				}
 
 											break;
@@ -207,13 +211,14 @@ public class Server implements Runnable
 	    				}                	
 	                	else
 	                	{
-	                		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-	                		break;
+	                		out.println("Nie mozna wysylac null.");
+	                		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+	                		//break;
 	                	}
                 	}
     				else
     				{
-						Thread.sleep(30000);
+						Thread.sleep(10000);
 
     					out.println("Czekaj az ktos zgadnie haslo");
     				}
@@ -263,8 +268,9 @@ public class Server implements Runnable
 		           	}
 		           	else
 		           	{
-		           		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-		           		break;
+		           		out.println("Nie mozna wysylac null.");
+		           		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+		           		//break;
 		           	}
             	}
             }

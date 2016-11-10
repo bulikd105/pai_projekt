@@ -17,6 +17,9 @@ public class Game
 	
 	public static void main(String[] args) throws IOException 
 	{
+		String temp = "";
+		passwordList.add(temp);
+		
 		int serverPort = 8060;
 		
 		ServerSocket serverSocket = new ServerSocket(serverPort);
