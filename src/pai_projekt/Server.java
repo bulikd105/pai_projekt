@@ -52,6 +52,7 @@ public class Server implements Runnable
             	{
             		out.println("Witaj nowy graczu. Wybierz jedna z opcji:" + 
             					"\n1 - Dolacz do gry\n2 - Menu");
+            		out.println("Wybierasz:");
 		
 		           	userInput = in.readLine();
 		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
@@ -140,7 +141,7 @@ public class Server implements Runnable
                 	}
             	}
             	// W innym wypadku, ustaw gracza, jako graj¹cego 
-            	else
+            	else if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == true && menuFlag == false)
             	{
             		newPlayer.setGuessing(true);
             		newPlayer.setNewPlayer(false);
@@ -149,9 +150,9 @@ public class Server implements Runnable
             	// Pokaz menu
             	if(menuFlag == true)
             	{
-            		out.println("Witaj w menu.\n" + 
-            					"1 - Wyswietl swoje dane\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+            		out.println("Witaj w menu.\n1 - Wyswietl swoje dane\n2 - Wyswietl statystyki wszystkich graczy\n" + 
             					"3 - Zmien swoja nazwe uzytkownika\n4 - Wroc do gry\n5 - Wyjdz");
+            		out.println("Wybierasz:");
 	
 		           	userInput = in.readLine();
 		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
