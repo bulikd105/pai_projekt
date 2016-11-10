@@ -35,7 +35,7 @@ public class Client
 		try 
 		{		
 			// Zmienne do przechwytywania odpowiedzi
-			String userInput = "Witaj serwerze";
+			String userInput = "Joining";
 			String serverAnswer = "";
 			boolean flag = true;
 		
@@ -47,7 +47,7 @@ public class Client
 			do
 			{	
 				// Odpowiadam serwerowi
-				out.println(userInput);
+				//out.println(userInput);
 
 				// Czytam odpowiedz serwera
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -58,7 +58,7 @@ public class Client
 					System.out.println("Server: " + serverAnswer);
 					
 					// Wylogowanie usera
-					if(serverAnswer.equals("logout"))
+					if(serverAnswer.equals("Wyjdz"))
 					{
 						return;
 					}
@@ -68,23 +68,9 @@ public class Client
 					{
 						flag = false;
 					}
-						
-					// Dodanie nowej uslugi
-					if(serverAnswer.equals("Podaj po przecinku, nazwe oraz czas wykonania zamowienia"))
-					{
-						userInput = stdIn.readLine();
-						out.println(userInput);
-					}
 					
-					// Anulowanie zamowienia
-					if(serverAnswer.equals("Podaj numer swojej uslugi, ktora chcesz anulowac"))
-					{
-						userInput = stdIn.readLine();
-						out.println(userInput);
-					}
-					
-					// Zamowienie uslugi
-					if(serverAnswer.equals("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic"))
+					// Uzytkownik podaje kolejny napis
+					if(serverAnswer.equals("Wybierasz:"))
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
@@ -93,7 +79,6 @@ public class Client
 				flag = true;
 			}
 			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0); 
-			
 		} 
 		catch (IOException e) 
 		{
