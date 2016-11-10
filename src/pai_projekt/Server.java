@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.sun.scenario.effect.Offset;
+
 /*
  * Klasa Server
  * Posiada metody odpowiedzialne za zarz¹dzanie graczami i obs³ugê gry.
@@ -50,11 +52,20 @@ public class Server implements Runnable
             String userInput = "";
             String serverOutput = "";
             
+            int offset;
+            int iterator = 0;
+                       
             //String password = passwordList.get(passwordList.size()-1);
             
             while(mainFlag  == true)
             {
             	String password = passwordList.get(passwordList.size()-1);
+            	offset = password.length();
+            	
+            	if(offset > iterator)
+            	{
+        			offset -= iterator;
+            	}
             	// Gdy do³¹cza nowy gracz
             	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false && menuFlag == false)
             	{
@@ -112,8 +123,9 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-	    	            	case "1" :  out.println("Podaj haslo:");
+	    	            	case "1" :  out.println("Haslo zaczyna sie od: " + password.substring(offset) + " . Liczba liter to: " + password.length() +"\nPodaj haslo:");
 	    	            				userInput = in.readLine();
+	    	            				iterator += 1;
 	    	            				// Jesli wyraz istnieje
 	    	            				if(dictionary.Contains(userInput))
 	    	            				{
@@ -191,6 +203,7 @@ public class Server implements Runnable
 				            				{
 				            					password = userInput;
 				            					passwordList.add(password);
+
 				            					out.println("Haslo do odgadniecia to: " + password);
 				            				}
 				            				// Jesli wyraz nie istnieje
