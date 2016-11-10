@@ -16,14 +16,17 @@ public class Server implements Runnable
 	private String playerName = "Player ";
 	private Socket socket;
 	private ArrayList<Player> playerList;
+	private ArrayList<String> passwordList;
 	Player newPlayer = null;
+	private String password = "";
 	
-	public Server(Socket socket, int playerId, ArrayList<Player> playerList) 
+	public Server(Socket socket, int playerId, ArrayList<Player> playerList, ArrayList<String> passwordList) 
 	{
 		newPlayer = new Player(playerId, playerName + playerId);
 		this.socket = socket;
 		this.playerList = playerList;
 		this.playerList.add(newPlayer);
+		this.passwordList = passwordList;
 		
 		System.out.println("Player: " + newPlayer.getPlayerName());
 	}
@@ -31,11 +34,13 @@ public class Server implements Runnable
 	@Override
 	public void run()
 	{
+		
 		BufferedReader in = null;
         PrintWriter out = null;
                 
         try
 		{	
+        	Dictionary dictionary = new Dictionary();
             in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             
@@ -44,6 +49,8 @@ public class Server implements Runnable
 
             String userInput = "";
             String serverOutput = "";
+            
+            String password = passwordList.get(passwordList.size()-1);
             
             while(mainFlag  == true)
             {
@@ -62,6 +69,16 @@ public class Server implements Runnable
 		           		switch(userInput)
 		            	{
 		            		case "1" :  out.println("Dolaczasz do gry");
+					            		if(newPlayer.getPlayerId() == 1)
+					            		{
+					            			newPlayer.setGuessing(false);
+					            		}
+					            		else
+					            		{
+					            			newPlayer.setGuessing(true);
+					            		}
+		            					newPlayer.setNewPlayer(false);
+		            					playerList.set(playerList.indexOf(newPlayer), newPlayer);
 		            					break;
 		            		
 		            		case "2" :  out.println("Menu");
@@ -84,6 +101,7 @@ public class Server implements Runnable
             		// Wyswietl glowne menu
                 	out.println( "Twoim zadaniem jest odgadniêcie hasla.\n" + 
                 				 "1 - Podaj haslo\n2 - Menu");
+                	out.println("Wybierasz:");
 
                 	userInput = in.readLine();
                 	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
@@ -92,7 +110,43 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-	    	            	case "1" :  out.println("Wprowadz haslo");
+	    	            	case "1" :  out.println("Podaj haslo:");
+	    	            				userInput = in.readLine();
+	    	            				// Jesli wyraz istnieje
+	    	            				if(dictionary.Contains(userInput))
+	    	            				{
+	    	            					if(userInput.equals(password))
+	    	            					{
+	    	            						out.println("Poprawne haslo.\n Dostajesz 100 pkt i wymyslasz nowe haslo");
+	    	            						// Co by nikt nie zgadl drugi raz
+	    	            						password = "";
+	    	            						passwordList.add(password);
+	    	            						
+	    	            						// Ustawienie osoby ktora wymyslala haslo na osobe ktora je odgaduje
+	    	            						for(Player tempPlayer : playerList)
+	    	            						{
+	    	            							if(tempPlayer.isGuessing() == false && tempPlayer.isNewPlayer() == false)
+	    	            							{
+	    	            								tempPlayer.setGuessing(true);
+	    	            								playerList.set(playerList.indexOf(tempPlayer), tempPlayer);
+	    	            							}
+	    	            						}
+	    	            						
+	    	            						// Ustawienie osoby ktora odgadla haslo na osobe ktora wymysla haslo
+	    	            						newPlayer.setPlayerScore(100);
+	    	            						newPlayer.setGuessing(false);
+	    	            						playerList.set(playerList.indexOf(newPlayer), newPlayer);
+	    	            					}
+	    	            					else
+	    	            					{
+	    	            						out.println("Niepoprawne haslo.");
+	    	            					}
+	    	            				}
+	    	            				// Jesli wyraz nie istnieje
+	    	            				else 
+	    	            				{
+	    	            					out.println("Nie ma takiego wyrazu\nPopraw dane");
+	    	            				}
 	    								break;
 	    		
 				    		case "2" :  out.println("Menu");
@@ -112,33 +166,57 @@ public class Server implements Runnable
             	// Gdy gracz wymyœla has³o
             	else if(newPlayer.isNewPlayer() == false && newPlayer.isGuessing() == false && menuFlag == false)
             	{
-            		// Wyswietl glowne menu
-                	out.println( "Twoim zadaniem jest wymyœlenie has³a.\n" + 
-                				 "1 - Wymyœl nowe haslo\n2 - Menu");
+    				if(password.equals(""))
+    				{
+	            		// Wyswietl glowne menu
+	                	out.println( "Twoim zadaniem jest wymyœlenie has³a.\n" + 
+	                				 "1 - Wymyœl nowe haslo\n2 - Menu");
+	                	out.println("Wybierasz:");
+	
+	                	userInput = in.readLine();
+	                	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+	
+	                	if(userInput != null && userInput.length() > 0)
+	                	{
+	                		switch(userInput)
+	    	            	{
+		    	            	case "1" :  out.println("Podaj haslo:");
+		    	            				userInput = in.readLine();
+	
+				            				// Jesli wyraz istnieje
+				            				if(dictionary.Contains(userInput))
+				            				{
+				            					password = userInput;
+				            					passwordList.add(password);
+				            				}
+				            				// Jesli wyraz nie istnieje
+				            				else 
+				            				{
+				            					out.println("Nie ma takiego wyrazu\nPopraw dane");
+				            				}
 
-                	userInput = in.readLine();
-                	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+											break;
+	    		
+					    		case "2" :  out.println("Menu");
+					    					menuFlag = true;
+											break;
+					
+								default  :  out.println("Nie ma takiej opcji\n");
+											break;
+	    	            	}     
+	    				}                	
+	                	else
+	                	{
+	                		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
+	                		break;
+	                	}
+                	}
+    				else
+    				{
+						Thread.sleep(30000);
 
-                	if(userInput != null && userInput.length() > 0)
-                	{
-                		switch(userInput)
-    	            	{
-	    	            	case "1" :  out.println("Wymysl haslo");
-	    								break;
-    		
-				    		case "2" :  out.println("Menu");
-				    					menuFlag = true;
-										break;
-				
-							default  :  out.println("Nie ma takiej opcji\n");
-										break;
-    	            	}           		
-                	}
-                	else
-                	{
-                		System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-                		break;
-                	}
+    					out.println("Czekaj az ktos zgadnie haslo");
+    				}
             	}
             	// W innym wypadku, ustaw gracza, jako graj¹cego 
             	else if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == true && menuFlag == false)
@@ -162,9 +240,11 @@ public class Server implements Runnable
 		           		switch(userInput)
 		            	{
 		            		case "1" :  out.println("Twoje Dane");
+		            					out.println(ShowMyStat(newPlayer));
 		            					break;
 		            		
 		            		case "2" :  out.println("Dane wszystkich graczy");
+		            					out.println(ShowAllStats(playerList));
 	        							break;
 	   		
 		            		case "3" :  out.println("Podaj nowa nazwe uzytkownika");
@@ -189,6 +269,10 @@ public class Server implements Runnable
             	}
             }
 		}
+        catch (InterruptedException e) 
+        {
+        	e.printStackTrace();
+        }
         catch(IOException e)
 		{
 			System.out.println("Klient: " + newPlayer.getPlayerName() + " zglosil blad: " + e);
