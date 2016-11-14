@@ -73,12 +73,17 @@ public class Client
 					if(serverAnswer.equals("Wybierasz:") || serverAnswer.equals("Podaj haslo:") || serverAnswer.equals("Nowa nazwa:"))
 					{
 						userInput = stdIn.readLine();
+						if(userInput.equals(null))
+						{
+							userInput = "";
+						}
 						out.println(userInput);
 					}
 				}	
 				flag = true;
 			}
-			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0); 
+			while(true);
+			//while ((userInput = stdIn.readLine()) != null && userInput.length() > 0); 
 		} 
 		catch (IOException e) 
 		{

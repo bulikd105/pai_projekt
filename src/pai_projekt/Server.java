@@ -231,7 +231,7 @@ public class Server implements Runnable
                 	}
     				else
     				{
-						Thread.sleep(10000);
+						Thread.sleep(100000);
 
     					out.println("Czekaj az ktos zgadnie haslo");
     				}
@@ -258,11 +258,14 @@ public class Server implements Runnable
 		           		switch(userInput)
 		            	{
 		            		case "1" :  out.println("Twoje Dane");
-		            					out.println(ShowMyStat(newPlayer));
+		            					String temp = ShowMyStat(newPlayer);
+		            					out.println(temp);
+		            					menuFlag = false;
 		            					break;
 		            		
 		            		case "2" :  out.println("Dane wszystkich graczy");
 		            					out.println(ShowAllStats(playerList));
+		            					menuFlag = false;
 	        							break;
 	   		
 		            		case "3" :  out.println("Nowa nazwa:");
@@ -281,6 +284,7 @@ public class Server implements Runnable
 		            					{
 		            						out.println("Nie mozna wysylac null.");
 		            					}
+		            					menuFlag = false;
 	        							break;
 	   		
 		            		case "4" :  out.println("Wracamy do gry");
@@ -300,7 +304,7 @@ public class Server implements Runnable
 		           		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
 		           		//break;
 		           	}
-            	}
+            	}      	
             }
 		}
         catch (InterruptedException e) 
