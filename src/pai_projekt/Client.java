@@ -1,19 +1,37 @@
 package pai_projekt;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import java.io.File;
 
 public class Client 
 {
 	public static void main(String[] args) 
 	{
 		// Parametry serwera
-		String serverAddress = "127.0.0.1";
-		int port = 8060;
-
+		String serverAddress = readXML("AddressIP");//"127.0.0.1";
+		String temp = readXML("Port");
+		System.out.println("----------------------------");
+		
+		int port = Integer.parseInt(temp);//8060;
+		
+		if(serverAddress.equals(null) || temp.equals(null))
+		{
+			System.out.println("Blad podczas czytania konfiguracji z XML'a.\nZamykam program");
+			System.exit(1);
+		}
+		
 		// Wstepna deklaracja bufferow
 		Socket socket = null;
 		PrintWriter out = null;
@@ -106,5 +124,36 @@ public class Client
 			}
 		}
 		
+	}
+	
+	static String readXML(String str)
+	{
+		String answer = null;
+		try 
+		{
+			File fXmlFile = new File("ServerConfiguration.xml");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile); 
+			
+			doc.getDocumentElement().normalize(); 
+			NodeList nList = doc.getElementsByTagName("staff");
+
+			for (int temp = 0; temp < nList.getLength(); temp++) 
+			{
+				Node nNode = nList.item(temp);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+				{
+					Element eElement = (Element) nNode; 
+					answer = eElement.getElementsByTagName(str).item(0).getTextContent();
+					System.out.println(str + ": " + eElement.getElementsByTagName(str).item(0).getTextContent());					
+				}
+			}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return answer;
 	}
 }

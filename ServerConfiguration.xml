@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+<staff id="1001">
+    <AddressIP>127.0.0.1</AddressIP>
+    <Port>8060</Port>
+    <ID>GameServer</ID>
+    <Timeout>1000</Timeout>
+</staff>
+</company>
