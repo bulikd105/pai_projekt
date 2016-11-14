@@ -288,6 +288,7 @@ public class Server implements Runnable
 										break;
 		            		
 		            		case "5" :  out.println("Wyjdz");
+		            					mainFlag = false;
 	        							break;
 	   		
 	        				default  :  out.println("Nie ma takiej opcji\n");
