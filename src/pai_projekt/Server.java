@@ -55,12 +55,7 @@ public class Server implements Runnable
             while(mainFlag  == true)
             {
             	String password = passwordList.get(passwordList.size()-1);
-            	offset = password.length();
             	
-            	if(offset > iterator)
-            	{
-        			offset -= iterator;
-            	}
             	// Gdy do³¹cza nowy gracz
             	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false && menuFlag == false)
             	{
@@ -116,9 +111,11 @@ public class Server implements Runnable
                 	{
                 		switch(userInput)
     	            	{
-	    	            	case "1" :  out.println("Haslo zaczyna sie od: " + password.substring(offset) + " . Liczba liter to: " + password.length() +"\nPodaj haslo:");
+	    	            	case "1" :  offset = password.length();
+	    	            	
+				    	            	out.println("Haslo zaczyna sie od: " + password.substring(0,iterator) + " . Liczba liter to: " + password.length() +"\nPodaj haslo:");
 	    	            				userInput = in.readLine();
-	    	            				iterator += 1;
+	    	            				
 	    	            				// Jesli wyraz istnieje
 	    	            				if(dictionary.Contains(userInput))
 	    	            				{
@@ -148,6 +145,12 @@ public class Server implements Runnable
 	    	            					{
 	    	            						out.println("Niepoprawne haslo.");
 	    	            					}
+	    	            					
+	    	            					if(offset > iterator)
+					    	            	{
+					    	            		iterator += 1;
+					    	            		//offset -= iterator;
+					    	            	}
 	    	            				}
 	    	            				// Jesli wyraz nie istnieje
 	    	            				else 

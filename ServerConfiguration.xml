@@ -4,6 +4,6 @@
     <AddressIP>127.0.0.1</AddressIP>
     <Port>8060</Port>
     <ID>GameServer</ID>
-    <Timeout>1000</Timeout>
+    <Timeout>10000</Timeout>
 </staff>
 </company>
