@@ -7,8 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import com.sun.scenario.effect.Offset;
-
 /*
  * Klasa Server
  * Posiada metody odpowiedzialne za zarz¹dzanie graczami i obs³ugê gry.
@@ -50,7 +48,6 @@ public class Server implements Runnable
             boolean menuFlag = false;
 
             String userInput = "";
-            String serverOutput = "";
             
             int offset;
             int iterator = 0;
