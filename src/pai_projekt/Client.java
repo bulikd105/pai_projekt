@@ -19,9 +19,10 @@ public class Client
 {
 	public static void main(String[] args) 
 	{
+		XMLoperations xml = new XMLoperations();
 		// Parametry serwera
-		String serverAddress = readXML("AddressIP");//"127.0.0.1";
-		String temp = readXML("Port");
+		String serverAddress = xml.readXML("AddressIP");//"127.0.0.1";
+		String temp = xml.readXML("Port");
 		System.out.println("----------------------------");
 		
 		int port = Integer.parseInt(temp);//8060;
@@ -123,37 +124,5 @@ public class Client
 				e.printStackTrace();
 			}
 		}
-		
-	}
-	
-	static String readXML(String str)
-	{
-		String answer = null;
-		try 
-		{
-			File fXmlFile = new File("ServerConfiguration.xml");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile); 
-			
-			doc.getDocumentElement().normalize(); 
-			NodeList nList = doc.getElementsByTagName("staff");
-
-			for (int temp = 0; temp < nList.getLength(); temp++) 
-			{
-				Node nNode = nList.item(temp);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
-				{
-					Element eElement = (Element) nNode; 
-					answer = eElement.getElementsByTagName(str).item(0).getTextContent();
-					System.out.println(str + ": " + eElement.getElementsByTagName(str).item(0).getTextContent());					
-				}
-			}
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		return answer;
 	}
 }

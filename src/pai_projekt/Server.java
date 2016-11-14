@@ -54,8 +54,6 @@ public class Server implements Runnable
             
             int offset;
             int iterator = 0;
-                       
-            //String password = passwordList.get(passwordList.size()-1);
             
             while(mainFlag  == true)
             {
@@ -69,12 +67,12 @@ public class Server implements Runnable
             	// Gdy do³¹cza nowy gracz
             	if(newPlayer.isNewPlayer() == true && newPlayer.isGuessing() == false && menuFlag == false)
             	{
-            		out.println("Witaj nowy graczu. Wybierz jedna z opcji:" + 
+            		out.println("Witaj nowy graczu: " + newPlayer.getPlayerName() +  
             					"\n1 - Dolacz do gry\n2 - Menu");
             		out.println("Wybierasz:");
 		
 		           	userInput = in.readLine();
-		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+		           	System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu dolaczania, powiedzial - " + userInput);
 		
 		           	if(userInput != null && userInput.length() > 0)
 		           	{
@@ -104,8 +102,6 @@ public class Server implements Runnable
 		           	else
 		           	{
 		           		out.println("Nie mozna wysylac null.");
-		           		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-		           		//break;
 		           	}
             	}
             	// Gdy gracz zgadujê haslo
@@ -117,7 +113,7 @@ public class Server implements Runnable
                 	out.println("Wybierasz:");
 
                 	userInput = in.readLine();
-                	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+                	System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu zgadywania hasla,  powiedzial - " + userInput);
 
                 	if(userInput != null && userInput.length() > 0)
                 	{
@@ -169,13 +165,13 @@ public class Server implements Runnable
 				
 							default  :  out.println("Nie ma takiej opcji\n");
 										break;
-    	            	}           		
+    	            	}
+                		
+                		System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu zgadywania hasla,  powiedzial - " + userInput);
                 	}
                 	else
                 	{
                 		out.println("Nie mozna wysylac null.");
-                		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-                		//break;
                 	}
             	}
             	// Gdy gracz wymyœla has³o
@@ -189,7 +185,7 @@ public class Server implements Runnable
 	                	out.println("Wybierasz:");
 	
 	                	userInput = in.readLine();
-	                	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+	                	System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu wymyslania hasla,  powiedzial - " + userInput);
 	
 	                	if(userInput != null && userInput.length() > 0)
 	                	{
@@ -199,7 +195,7 @@ public class Server implements Runnable
 		    	            				userInput = in.readLine();
 	
 				            				// Jesli wyraz istnieje
-				            				if(dictionary.Contains(userInput) && userInput.length() > 0)
+				            				if(dictionary.Contains(userInput) && userInput.length() > 4)
 				            				{
 				            					password = userInput;
 				            					passwordList.add(password);
@@ -209,7 +205,7 @@ public class Server implements Runnable
 				            				// Jesli wyraz nie istnieje
 				            				else 
 				            				{
-				            					out.println("Nie ma takiego wyrazu");
+				            					out.println("Nie ma takiego wyrazu lub wyraz jest za krótki");
 				            				}
 
 											break;
@@ -220,19 +216,19 @@ public class Server implements Runnable
 					
 								default  :  out.println("Nie ma takiej opcji\n");
 											break;
-	    	            	}     
+	    	            	}  
+	                		
+
+		                	System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu wymyslania hasla, powiedzial - " + userInput); 
 	    				}                	
 	                	else
 	                	{
 	                		out.println("Nie mozna wysylac null.");
-	                		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-	                		//break;
 	                	}
                 	}
     				else
     				{
 						Thread.sleep(100000);
-
     					out.println("Czekaj az ktos zgadnie haslo");
     				}
             	}
@@ -246,12 +242,12 @@ public class Server implements Runnable
             	// Pokaz menu
             	if(menuFlag == true)
             	{
-            		out.println("Witaj w menu.\n1 - Wyswietl swoje dane\n2 - Wyswietl statystyki wszystkich graczy\n" + 
+            		out.println("1 - Wyswietl swoje dane\n2 - Wyswietl statystyki wszystkich graczy\n" + 
             					"3 - Zmien swoja nazwe uzytkownika\n4 - Wroc do gry\n5 - Wyjdz");
             		out.println("Wybierasz:");
 	
 		           	userInput = in.readLine();
-		           	System.out.println("Klient: " + newPlayer.getPlayerName() + " powiedzial - " + userInput);
+		           	System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu opcje,  powiedzial - " + userInput);
 		
 		           	if(userInput != null && userInput.length() > 0)
 		           	{
@@ -296,13 +292,13 @@ public class Server implements Runnable
 	   		
 	        				default  :  out.println("Nie ma takiej opcji\n");
 	        							break;
-		            	}           		
+		            	} 
+		           		
+			           	System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " w menu opcje,  wybral - " + userInput);
 		           	}
 		           	else
 		           	{
 		           		out.println("Nie mozna wysylac null.");
-		           		//System.out.println("Klient: " + newPlayer.getPlayerName() + " przeslal null'a, zamykajac tym samym polaczenie");
-		           		//break;
 		           	}
             	}      	
             }
@@ -313,7 +309,7 @@ public class Server implements Runnable
         }
         catch(IOException e)
 		{
-			System.out.println("Klient: " + newPlayer.getPlayerName() + " zglosil blad: " + e);
+			System.out.println("Klient: " + newPlayer.getPlayerId() + " " + newPlayer.getPlayerName() + " zglosil blad: " + e);
 		}
 		finally // W razie gdyby klient zglosil blad, rozlacz go
 		{
@@ -364,10 +360,11 @@ public class Server implements Runnable
 		StringBuilder sb = new StringBuilder();
 		
 		// Dane aktualnego gracza
-		sb.append("My stats\n");
+		sb.append("----------------------------------------\n");
 		sb.append("Player ID: " + player.getPlayerId() + "\n");
 		sb.append("Player Name: " + player.getPlayerName() + "\n");
 		sb.append("Score: " + player.getPlayerScore() + "\n");
+		sb.append("----------------------------------------\n\n");
 		
 		return sb.toString();
 		
@@ -377,7 +374,6 @@ public class Server implements Runnable
 	{
 		// String builder, zeby wyslac tylko jedna linie odpwowiedzi
 		StringBuilder sb = new StringBuilder();
-		sb.append("All players stats\n");
 		
 		// Sprawdzamy czy lista graczy nie jest pusta
 		if(!playerList.isEmpty())
@@ -393,8 +389,9 @@ public class Server implements Runnable
 		}
 		else
 		{
-			sb.append("Lista wszystkich uslug jest pusta");
+			sb.append("There is no players");
 		}
+		sb.append("----------------------------------------\n\n");
 		return sb.toString();
 	}
 }

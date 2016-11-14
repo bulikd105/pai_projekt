@@ -20,7 +20,17 @@ public class Game
 		String temp = "";
 		passwordList.add(temp);
 		
-		int serverPort = 8060;
+		XMLoperations xml = new XMLoperations();
+		temp = xml.readXML("Port");
+		System.out.println("----------------------------");
+		
+		if(temp.equals(null))
+		{
+			System.out.println("Blad podczas czytania konfiguracji z XML'a.\nZamykam program");
+			System.exit(1);
+		}
+		
+		int serverPort = Integer.parseInt(temp);//8060;
 		
 		ServerSocket serverSocket = new ServerSocket(serverPort);
 		
